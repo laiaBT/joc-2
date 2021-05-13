@@ -1,4 +1,17 @@
-let mySprite = sprites.create(img`
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
+    mySprite.say("borinot!", 1000)
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    info.changeLifeBy(-1)
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    info.changeScoreBy(1)
+})
+info.onLifeZero(function () {
+    game.over(false)
+})
+let mySprite: Sprite = null
+mySprite = sprites.create(img`
     3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
     3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
     3 1 1 1 1 1 3 3 3 1 1 1 1 1 3 3 
@@ -16,7 +29,6 @@ let mySprite = sprites.create(img`
     3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
     3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
     `, SpriteKind.Player)
-controller.moveSprite(mySprite)
 let mySprite2 = sprites.create(img`
     ........................
     ....ffffff..............
@@ -43,6 +55,10 @@ let mySprite2 = sprites.create(img`
     ........................
     ........................
     `, SpriteKind.Enemy)
+mySprite.setPosition(78, 32)
+mySprite2.setPosition(111, 8)
+mySprite2.setVelocity(50, 50)
+controller.moveSprite(mySprite)
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -168,3 +184,7 @@ scene.setBackgroundImage(img`
 tiles.setTilemap(tilemap`level1`)
 scene.cameraFollowSprite(mySprite)
 mySprite2.follow(mySprite, 50)
+mySprite.startEffect(effects.smiles, 500)
+mySprite.setBounceOnWall(true)
+info.setScore(10)
+info.setLife(6)
